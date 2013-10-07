@@ -137,7 +137,7 @@ class PBRFApi(object):
     def _get_params(self):
         return self.__params
 
-    def _flush_params(self):
+    def __flush_params(self):
         self.__params = dict()
 
     def __call_api(self, command):
@@ -150,6 +150,7 @@ class PBRFApi(object):
         urllib2.install_opener(opener)
         response = urllib2.urlopen(request)
         api_response = response.read()
+        self.__flush_params()
         try:
             api_response_decoded = json.loads(api_response)
         except ValueError:
