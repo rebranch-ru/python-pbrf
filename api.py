@@ -6,7 +6,8 @@ import urllib2
 class PBRFApi(object):
     _api_host = u'http://pbrf.ru/'
     __debug = False
-    CMD_F113 = u'pdf.F113F117'
+    CMD_F113117 = u'pdf.F113F117'
+    CMD_F113N = u'pdf.F113'
 
     PARAM_FROM_SURNAME = u'from_surname'
     PARAM_FROM_NAME = u'from_name'
@@ -25,7 +26,7 @@ class PBRFApi(object):
     PARAM_SUM_NUM = u'sum_num'
     PARAM_INN = u'inn'
     PARAM_KOR_ACCOUNT = u'kor_account'
-    PARAM_CURRENT_ACCOUNT = u'current_account'
+    PARAM_CERRENT_ACCOUNT = u'cerrent_account'
     PARAM_BOK = u'bok'
     PARAM_BANK_NAME = u'bank_name'
     PARAM_DECLARED_VALUE_NUM = u'declared_value_num'
@@ -37,13 +38,14 @@ class PBRFApi(object):
     PARAM_DOCUMENT_YEAR = u'document_year'
     PARAM_DOCUMENT_ISSUED_BY = u'document_issued_by'
 
-    __params = {}
+    __params = dict()
     __secret_key = None
 
     def __init__(self, secret_key, debug=False):
         super(PBRFApi, self).__init__()
         self.__secret_key = secret_key
         self.__debug = debug
+        self.__params = dict()
 
     def _set_param(self, key, value):
         self.__params[key] = value
@@ -99,8 +101,8 @@ class PBRFApi(object):
     def _set_kor_account(self, kor_account):
         self._set_param(self.PARAM_KOR_ACCOUNT, kor_account)
 
-    def _set_current_account(self, current_account):
-        self._set_param(self.PARAM_CURRENT_ACCOUNT, current_account)
+    def _set_cerrent_account(self, cerrent_account):
+        self._set_param(self.PARAM_CERRENT_ACCOUNT, cerrent_account)
 
     def _set_bok(self, bok):
         self._set_param(self.PARAM_BOK, bok)
@@ -163,9 +165,10 @@ class PBRFApi(object):
         else:
             return api_response
 
-    def get_f113(self, from_surname, from_patronymic, from_city, from_street, from_zip, whom_surname, whom_patronymic,
-                 whom_city, whom_street, whom_zip, declared_value_num, cod_amount_num, document, document_serial,
-                 document_number, document_day, document_year, document_issued_by):
+    def get_f113f117(self, from_surname, from_patronymic, from_city, from_street, from_zip, whom_surname,
+                     whom_patronymic,
+                     whom_city, whom_street, whom_zip, declared_value_num, cod_amount_num, document, document_serial,
+                     document_number, document_day, document_year, document_issued_by):
         self._set_from_surname(from_surname)
         self._set_from_patronymic(from_patronymic)
         self._set_from_city(from_city)
@@ -184,4 +187,25 @@ class PBRFApi(object):
         self._set_document_day(document_day)
         self._set_document_year(document_year)
         self._set_document_issued_by(document_issued_by)
-        return self.__call_api(command=self.CMD_F113)
+        return self.__call_api(command=self.CMD_F113117)
+
+    def get_f113n(self, from_surname, from_name, from_region, from_city, from_street, from_build, from_zip, whom_name,
+                  whom_city, whom_street, whom_zip, sum_num, inn, kor_account, cerrent_account, bok, bank_name):
+        self._set_from_surname(from_surname)
+        self._set_from_name(from_name)
+        self._set_from_city(from_city)
+        self._set_from_street(from_street)
+        self._set_from_zip(from_zip)
+        self._set_from_region(from_region)
+        self._set_from_build(from_build)
+        self._set_whom_city(whom_city)
+        self._set_whom_street(whom_street)
+        self._set_whom_zip(whom_zip)
+        self._set_whom_name(whom_name)
+        self._set_inn(inn)
+        self._set_sum_num(sum_num)
+        self._set_kor_account(kor_account)
+        self._set_cerrent_account(cerrent_account)
+        self._set_bok(bok)
+        self._set_bank_name(bank_name)
+        return self.__call_api(command=self.CMD_F113N)
