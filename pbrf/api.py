@@ -8,6 +8,7 @@ class PBRFApi(object):
     __debug = False
     CMD_F113117 = u'pdf.F113F117'
     CMD_F113N = u'pdf.F113'
+    CMD_F107 = u'pdf.F107'
 
     PARAM_FROM_SURNAME = u'from_surname'
     PARAM_FROM_NAME = u'from_name'
@@ -21,9 +22,11 @@ class PBRFApi(object):
     PARAM_WHOM_PATRONYMIC = u'whom_patronymic'
     PARAM_WHOM_SURNAME = u'whom_surname'
     PARAM_WHOM_CITY = u'whom_city'
+    PARAM_WHOM_COUNTRY = u'whom_country'
     PARAM_WHOM_STREET = u'whom_street'
     PARAM_WHOM_ZIP = u'whom_zip'
     PARAM_SUM_NUM = u'sum_num'
+    PARAM_WHOM = u'whom'
     PARAM_INN = u'inn'
     PARAM_KOR_ACCOUNT = u'kor_account'
     PARAM_CERRENT_ACCOUNT = u'cerrent_account'
@@ -37,6 +40,7 @@ class PBRFApi(object):
     PARAM_DOCUMENT_DAY = u'document_day'
     PARAM_DOCUMENT_YEAR = u'document_year'
     PARAM_DOCUMENT_ISSUED_BY = u'document_issued_by'
+    PARAM_OBJECT = u'object'
 
     __params = dict()
     __secret_key = None
@@ -136,6 +140,15 @@ class PBRFApi(object):
     def _set_document_issued_by(self, document_issued_by):
         self._set_param(self.PARAM_DOCUMENT_ISSUED_BY, document_issued_by)
 
+    def _set_whom(self, whom):
+        self._set_param(self.PARAM_WHOM, whom)
+
+    def _set_whom_country(self, country):
+        self._set_param(self.PARAM_WHOM_COUNTRY, country)
+
+    def _set_object(self, objects):
+        self._set_param(self.PARAM_OBJECT, objects)
+
     def _get_params(self):
         return self.__params
 
@@ -209,3 +222,15 @@ class PBRFApi(object):
         self._set_bok(bok)
         self._set_bank_name(bank_name)
         return self.__call_api(command=self.CMD_F113N)
+
+    def get_f107(self, whom, whom_country, whom_city, investments):
+        self._set_whom(whom)
+        self._set_whom_country(whom_country)
+        self._set_whom_city(whom_city)
+        self._set_object(investments)
+        return self.__call_api(command=self.CMD_F107)
+
+    @staticmethod
+    def get_investment(name, count, price):
+        investment = dict(name=name, count=count, price=price)
+        return investment

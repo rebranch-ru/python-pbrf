@@ -3,7 +3,7 @@ import unittest
 
 from pbrf import api
 
-key = u''
+key = u'f'
 
 F113117_DATA = dict(
     from_surname=u'Иванов Федор',
@@ -46,6 +46,16 @@ F113N_DATA = dict(
     bank_name=u'Альфа-Банк'
 )
 
+F107_DATA = dict(
+    whom=u'Апиговняев Кирилл Александрович',
+    whom_country=u'Украина',
+    whom_city=u'г. Харьков, Зуева ул. 14-12',
+    investments=[
+        api.PBRFApi.get_investment(name=u'Скрипка', count=3, price=1800),
+        api.PBRFApi.get_investment(name=u'Рояль', count=1, price=800),
+    ]
+)
+
 
 class PBRFAPITests(unittest.TestCase):
     def test_f113117(self):
@@ -56,6 +66,11 @@ class PBRFAPITests(unittest.TestCase):
     def test_f113n(self):
         client = api.PBRFApi(secret_key=key, debug=True)
         pdf_url = client.get_f113n(**F113N_DATA)
+        self.assertIsNotNone(pdf_url)
+
+    def test_f107(self):
+        client = api.PBRFApi(secret_key=key, debug=True)
+        pdf_url = client.get_f107(**F107_DATA)
         self.assertIsNotNone(pdf_url)
 
 
