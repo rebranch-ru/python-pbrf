@@ -2,12 +2,12 @@ from os.path import join, dirname
 
 from setuptools import setup, find_packages
 
-from pbrf import api
+import pbrf
 
 
 setup(
     name='pbrf',
-    version=api.__version__,
+    version=pbrf.__version__,
     packages=find_packages(),
     long_description=open(join(dirname(__file__), 'README.md')).read(),
     author='Rebranch',
