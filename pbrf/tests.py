@@ -1,7 +1,7 @@
 # -*- coding:utf-8 -*-
 import unittest
 
-import api
+from pbrf import api
 
 key = u''
 
