@@ -29,8 +29,8 @@ class PBRFApi(object):
     PARAM_WHOM = u'whom'
     PARAM_INN = u'inn'
     PARAM_KOR_ACCOUNT = u'kor_account'
-    PARAM_CERRENT_ACCOUNT = u'cerrent_account'
-    PARAM_BOK = u'bok'
+    PARAM_CURRENT_ACCOUNT = u'current_account'
+    PARAM_BIK = u'bik'
     PARAM_BANK_NAME = u'bank_name'
     PARAM_DECLARED_VALUE_NUM = u'declared_value_num'
     PARAM_COD_AMOUNT_NUM = u'COD_amount_num'
@@ -105,11 +105,11 @@ class PBRFApi(object):
     def _set_kor_account(self, kor_account):
         self._set_param(self.PARAM_KOR_ACCOUNT, kor_account)
 
-    def _set_cerrent_account(self, cerrent_account):
-        self._set_param(self.PARAM_CERRENT_ACCOUNT, cerrent_account)
+    def _set_current_account(self, current_account):
+        self._set_param(self.PARAM_CURRENT_ACCOUNT, current_account)
 
-    def _set_bok(self, bok):
-        self._set_param(self.PARAM_BOK, bok)
+    def _set_bik(self, bik):
+        self._set_param(self.PARAM_BIK, bik)
 
     def _set_bank_name(self, bank_name):
         self._set_param(self.PARAM_BANK_NAME, bank_name)
@@ -203,7 +203,7 @@ class PBRFApi(object):
         return self.__call_api(command=self.CMD_F113117)
 
     def get_f113n(self, from_surname, from_name, from_region, from_city, from_street, from_build, from_zip, whom_name,
-                  whom_city, whom_street, whom_zip, sum_num, inn, kor_account, cerrent_account, bok, bank_name):
+                  whom_city, whom_street, whom_zip, sum_num, inn, kor_account, current_account, bik, bank_name):
         self._set_from_surname(from_surname)
         self._set_from_name(from_name)
         self._set_from_city(from_city)
@@ -218,8 +218,8 @@ class PBRFApi(object):
         self._set_inn(inn)
         self._set_sum_num(sum_num)
         self._set_kor_account(kor_account)
-        self._set_cerrent_account(cerrent_account)
-        self._set_bok(bok)
+        self._set_current_account(current_account)
+        self._set_bik(bik)
         self._set_bank_name(bank_name)
         return self.__call_api(command=self.CMD_F113N)
 
